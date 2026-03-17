@@ -4,7 +4,6 @@ import {
   UpdateDoctorPayload,
   RegisterDoctorPayload,
 } from "@/app/lib/doctor/schema";
-import { success } from "zod";
 
 export const fetchDoctors = async (
   query?: string,

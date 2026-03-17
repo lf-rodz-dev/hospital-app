@@ -1,19 +1,16 @@
 import { z } from "zod";
 
 export const PatientFormSchema = z.object({
+  weight: z.string().min(1, "El peso es requerido"),
 
-  weight: z
-    .string()
-    .min(1, "El peso es requerido"),
-
-  height: z
-    .string()
-    .min(1, "La altura es requerida"),
+  height: z.string().min(1, "La altura es requerida"),
 
   bloodType: z
-    .enum(["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"], {
-      errorMap: () => ({ message: "Selecciona un tipo de sangre válido" }),
-    }),
+    .string()
+    .refine(
+      (val) => ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"].includes(val),
+      { message: "Selecciona un tipo de sangre válido" },
+    ),
 
   allergies: z
     .string()
@@ -34,4 +31,4 @@ export const PatientFormSchema = z.object({
 
 export type PatientFormData = z.infer<typeof PatientFormSchema>;
 
-export type UpdatePatientData = PatientFormData & {id: string;};
+export type UpdatePatientData = PatientFormData & { id: string };
