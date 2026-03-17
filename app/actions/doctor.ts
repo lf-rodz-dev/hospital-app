@@ -119,7 +119,6 @@ export const fetchNameDoctor = async (id: string) => {
       error: null,
     };
   } catch (error: any) {
-    ("Error en fetchNameDoctor: ", error);
     return {
       success: false,
       name: "",
