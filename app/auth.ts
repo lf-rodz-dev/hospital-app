@@ -1,7 +1,6 @@
-// auth.ts (raíz del proyecto)
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { LoginFormSchema } from "./lib/login/schema";
+import { LoginFormSchema } from "@/app/lib/login/schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,11 +11,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         try {
-          // Validar con Zod
           const { userEmail, userPass } =
             await LoginFormSchema.parseAsync(credentials);
 
-          // Llamar a tu API Lambda
           const baseUrl =
             process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/dev";
           const response = await fetch(`${baseUrl}/login`, {
@@ -27,7 +24,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const result = await response.json();
 
-          // Si el login falla, retornar null
           if (!result.success || !result.user) {
             return null;
           }
@@ -39,13 +35,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
 
           return {
-            id: result.user.id_user,
-            name: result.user.name,
-            email: result.user.email,
-            phone: result.user.phone,
-            role: roleMap[result.user.rol.toLowerCase().trim()],
-            token: result.token,
-          };
+            id: String(result.user.id_user),
+            name: result.user.name as string,
+            email: result.user.email as string,
+            phone: result.user.phone as string,
+            role: roleMap[result.user.rol.toLowerCase().trim() as keyof typeof roleMap] as string,
+            token: result.token as string,
+          } as any;
           
         } catch (error) {
           console.error("Auth error:", error);
@@ -55,7 +51,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    // 🎫 Agregar datos personalizados al JWT
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -64,7 +59,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
-    // 📦 Agregar datos personalizados a la sesión
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
@@ -75,10 +69,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   pages: {
-    signIn: "/login", // 🔐 Página personalizada de login
+    signIn: "/login",
   },
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // ⏱️ 24 horas
+    maxAge: 24 * 60 * 60,
   },
 });
