@@ -14,8 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
+import { Suspense } from "react";
 
-export default function Page() {
+function PatientHistoryContent() {
   {
     /*Obtiene los parametros actuales de la url*/
   }
@@ -52,6 +53,16 @@ export default function Page() {
             />
           </CardContent>
         </Card>
+    </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <main className="grid gap-4 min-h-dvh space-y-6 p-6 bg-slate-200">
+      <Suspense fallback={<div>Cargando...</div>}>
+        <PatientHistoryContent />
+      </Suspense>
     </main>
   );
 }

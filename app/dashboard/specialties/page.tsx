@@ -11,8 +11,9 @@ import {
 } from "@/app/components/ui/card";
 {/*Obtener los parametros de la url*/}
 import {useSearchParams} from 'next/navigation'
+import { Suspense } from "react";
 
-export default function Page() {
+function SpecialtiesContent() {
   {/*obtener los parametros de la url*/}
   const searchParams = useSearchParams();
   {/*obtener la consulta dentro de los parametros*/}
@@ -34,6 +35,16 @@ export default function Page() {
             <TableSpecialties query={query} currentPage={currentPage}/>
           </CardContent>
         </Card>
+    </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <main className="grid gap-4 min-h-dvh space-y-6 p-6 bg-slate-200">
+      <Suspense fallback={<div>Cargando...</div>}>
+        <SpecialtiesContent />
+      </Suspense>
     </main>
   );
 }
