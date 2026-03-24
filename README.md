@@ -1,8 +1,8 @@
 <<<<<<< HEAD
 Este es el cambio de la rama MAIN
-=======
+
 Este es el cambio de la rama feature
->>>>>>> feature-ejercicio
+feature-ejercicio
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

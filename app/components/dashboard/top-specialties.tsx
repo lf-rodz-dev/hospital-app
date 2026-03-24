@@ -88,51 +88,51 @@ export function TopSpecialties() {
           Top 5 especialidades con más médicos asignados
         </p>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          data={chartData}
-          margin={{ top: 20, right: 30, left: 0, bottom: 60 }}
-        >
-          <XAxis
-            dataKey="name"
-            stroke="hsl(var(--muted-foreground))"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-            angle={-45}
-            textAnchor="end"
-            height={100}
-          />
-          <YAxis
-            stroke="hsl(var(--muted-foreground))"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-            label={{ value: "Médicos", angle: -90, position: "insideLeft" }}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: "8px",
-              padding: "12px",
-            }}
-            cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
-            formatter={(value) => [
-              `${value} médicos`,
-              "Total",
-            ]}
-            labelStyle={{ color: "hsl(var(--foreground))" }}
-          />
-          <Bar
-            dataKey="pacientes"
-            fill="hsl(var(--accent))"
-            radius={[8, 8, 0, 0]}
-            isAnimationActive={true}
-            animationDuration={500}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="h-[300px] w-full"> {/* Contenedor para asegurar el height */}
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            // 1. Reducimos los márgenes laterales a casi cero
+            margin={{ top: 10, right: 10, left: -20, bottom: 0 }} 
+          >
+            <XAxis
+              dataKey="name"
+              stroke="hsl(var(--muted-foreground))"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              angle={-45}
+              textAnchor="end"
+              height={70}
+              // 2. Eliminamos el espacio extra a los lados de las barras
+              padding={{ left: 10, right: 10 }} 
+            />
+            <YAxis
+              stroke="hsl(var(--muted-foreground))"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              // 3. Ocultamos el label si ocupa mucho espacio o usamos hide={true} si no es crítico
+              width={40}
+            />
+            <Tooltip
+              cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
+              contentStyle={{
+                backgroundColor: "hsl(var(--card))",
+                border: "1px solid hsl(var(--border))",
+                borderRadius: "8px",
+              }}
+            />
+            <Bar
+              dataKey="pacientes"
+              fill="hsl(var(--accent))"
+              radius={[4, 4, 0, 0]}
+              // 4. Ajustamos el ancho de las barras para que no se vean tan delgadas
+              barSize={40} 
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </Card>
   );
 }

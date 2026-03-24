@@ -99,36 +99,32 @@ export function TopDoctors() {
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={chartData}
-          layout="vertical"
-          margin={{ top: 5, right: 30, left: 150, bottom: 5 }}
+          // Si querías que las barras estuvieran "paradas" (verticales), 
+          // usa layout="horizontal" e invierte los tipos en XAxis e YAxis.
+          // Aquí te dejo la versión para que las barras estén PARADAS:
+          layout="horizontal" 
+          margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
         >
-          {/* Para gráfico horizontal: XAxis es el eje de valores, YAxis es el eje de categorías */}
+          {/* Eje X: Ahora es la categoría (Nombres de médicos) */}
           <XAxis
-            type="number"
-            stroke="hsl(var(--muted-foreground))"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <YAxis
             type="category"
             dataKey="name"
             stroke="hsl(var(--muted-foreground))"
             fontSize={12}
             tickLine={false}
             axisLine={false}
-            width={140}
+          />
+          {/* Eje Y: Ahora es el número (Cantidad de citas) */}
+          <YAxis
+            type="number"
+            stroke="hsl(var(--muted-foreground))"
+            fontSize={12}
+            tickLine={false}
+            axisLine={false}
+            width={40}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: "8px",
-              padding: "12px",
-            }}
             cursor={{ fill: "rgba(0, 0, 0, 0.05)" }}
-            formatter={(value) => [`${value} citas`, "Total"]}
-            labelStyle={{ color: "hsl(var(--foreground))" }}
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 const data = payload[0].payload;
@@ -150,7 +146,8 @@ export function TopDoctors() {
           <Bar
             dataKey="appointments"
             fill="hsl(var(--accent))"
-            radius={[0, 8, 8, 0]}
+            // Radio en la parte superior de la barra [top-left, top-right, bottom-right, bottom-left]
+            radius={[8, 8, 0, 0]} 
             isAnimationActive={true}
             animationDuration={500}
           />

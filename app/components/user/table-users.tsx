@@ -93,7 +93,7 @@ const TableUsers = ({ query, currentPage, rol, status }: Props) => {
           <TableBody>
             {users.length > 0 ? (
               users.map((user) => (
-                <TableRow key={user.id_user}>
+                <TableRow key={user.id_user} className="animate-slide-in-left">
                   {/* Nombre */}
                   <TableCell className="font-medium">{user.name}</TableCell>
 
@@ -107,9 +107,9 @@ const TableUsers = ({ query, currentPage, rol, status }: Props) => {
 
                   {/* Rol */}
                   <TableCell>
-                    <span className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                    <div className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
                       {user.rol}
-                    </span>
+                    </div>
                   </TableCell>
 
                   {/* Fecha de registro */}
